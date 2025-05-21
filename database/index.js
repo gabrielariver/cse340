@@ -2,7 +2,9 @@ const { Pool } = require("pg")
 require("dotenv").config()
 
 let pool
-if (process.env.NODE_ENV == "development") {
+
+if (process.env.NODE_ENV === "development") {
+  // Conexión local (con SSL opcional)
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {
@@ -13,7 +15,7 @@ if (process.env.NODE_ENV == "development") {
     async query(text, params) {
       try {
         const res = await pool.query(text, params)
-        console.log("executed query", { text }) // muestra la consulta ejecutada
+        console.log("executed query", { text })
         return res
       } catch (error) {
         console.error("error in query", { text })
@@ -22,8 +24,12 @@ if (process.env.NODE_ENV == "development") {
     },
   }
 } else {
+
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
   })
   module.exports = pool
 }
