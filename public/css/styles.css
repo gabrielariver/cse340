@@ -24,6 +24,7 @@ h1 {
   text-align: left;
   padding: 15px;
 }
+
 /* Layout wrapper */
 #wrapper {
   max-width: 1000px;
@@ -217,11 +218,12 @@ nav a:hover {
   margin-top: 10px;
   font-size: 1rem;
   line-height: 1.6;
-  
 }
+
 .reviews li {
   margin-bottom: 10%;
 }
+
 /* Footer */
 footer {
   text-align: left;
@@ -229,7 +231,7 @@ footer {
   padding: 20px 0 0 0;
   margin: 0;
 }
-/*css w03 update*/
+
 /* Vehicle Cards Grid */
 #inv-display {
   display: flex;
@@ -273,6 +275,60 @@ footer {
   color: #0D1321;
 }
 
+/* Vehicle Detail Section */
+.vehicle-detail-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin: 40px auto;
+  max-width: 1000px;
+  padding: 20px;
+  background-color: #ffffffd9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-detail-image {
+  flex: 1 1 400px;
+  text-align: center;
+}
+
+.vehicle-detail-image img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.vehicle-detail-info {
+  flex: 1 1 300px;
+  text-align: left;
+  padding: 20px;
+  background-color: #f6f6f6;
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.vehicle-detail-info h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.vehicle-detail-info p {
+  margin: 10px 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.vehicle-detail-info strong {
+  font-weight: bold;
+  display: inline-block;
+  min-width: 90px;
+}
+
 /* Media Queries - Responsiveness */
 @media (max-width: 768px) {
   nav ul {
@@ -293,6 +349,7 @@ footer {
     align-items: center;
     position: relative;
   }
+
   .text-box {
     position: absolute;
     top: 10%;
@@ -300,12 +357,35 @@ footer {
     max-width: 180px;
     font-size: 0.9rem;
   }
+
   .upgrades-reviews-container {
     flex-direction: column-reverse;
     text-align: center;
   }
+
   .upgrades,
   .reviews {
     width: 100%;
+  }
+
+  .vehicle-detail-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vehicle-detail-info {
+    text-align: center;
+    width: 100%;
+  }
+
+  .vehicle-detail-info strong {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .vehicle-detail-image img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
   }
 }
