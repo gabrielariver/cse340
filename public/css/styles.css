@@ -17,6 +17,7 @@ body {
     linear-gradient(45deg, #0D1321 25%, transparent 25%, transparent 75%, #0D1321 75%, #3E5C76);
   background-size: 100px 100px;
   background-position: 0 0, 50px 50px;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -227,6 +228,49 @@ footer {
   font-size: 14px;
   padding: 20px 0 0 0;
   margin: 0;
+}
+/*css w03 update*/
+/* Vehicle Cards Grid */
+#inv-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 0;
+  margin: 40px 0;
+  list-style: none;
+}
+
+#inv-display li {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
+  max-width: 90%;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+#inv-display li:hover {
+  transform: scale(1.03);
+}
+
+#inv-display img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+#inv-display h2 {
+  font-size: 1.1rem;
+  margin: 10px 0 5px;
+}
+
+#inv-display span {
+  font-weight: bold;
+  color: #0D1321;
 }
 
 /* Media Queries - Responsiveness */
