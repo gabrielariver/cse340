@@ -1,4 +1,6 @@
 const invModel = require("../models/inventory-model")
+const classificationValidation = require("./classification-validation")
+
 const Util = {} 
 
 /* ************************
@@ -11,13 +13,13 @@ Util.getNav = async function (req, res, next) {
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
   data.forEach((row) => {
-  list += "<li>"
-  list +=
-    '<a href="/inv/classification/' + row.classification_id +
-    '" title="See our inventory of ' + row.classification_name + ' vehicles">' +
-    row.classification_name + '</a>'
-  list += "</li>"
-})
+    list += "<li>"
+    list +=
+      '<a href="/inv/classification/' + row.classification_id +
+      '" title="See our inventory of ' + row.classification_name + ' vehicles">' +
+      row.classification_name + '</a>'
+    list += "</li>"
+  })
 
   list += "</ul>"
   return list
@@ -67,14 +69,33 @@ Util.buildVehicleDetail = function(vehicle) {
       </div>
       <div class="vehicle-detail-info">
         <h2>${vehicle.inv_make} ${vehicle.inv_model} Details</h2>
-        <p><strong>Price:</strong> $${vehicle.inv_price.toLocaleString("en-US")}</p>
+        <p><strong>Price:</strong> $${Number(vehicle.inv_price).toLocaleString("en-US")}</p>
         <p><strong>Description:</strong> ${vehicle.inv_description}</p>
         <p><strong>Color:</strong> ${vehicle.inv_color}</p>
         <p><strong>Miles:</strong> ${vehicle.inv_miles.toLocaleString("en-US")}</p>
       </div>
     </section>
   `
-  return detail
+}
+
+/* **************************************
+ * Build the classification drop-down list
+ * ************************************ */
+Util.buildClassificationList = async function (selectedId = null) {
+  let data = await invModel.getClassifications()
+  let list = '<select id="classification_id" name="classification_id" required>'
+  list += "<option value=''>Choose a Classification</option>"
+
+  data.forEach((row) => {
+    list += `<option value="${row.classification_id}"`
+    if (selectedId == row.classification_id) {
+      list += " selected"
+    }
+    list += `>${row.classification_name}</option>`
+  })
+
+  list += "</select>"
+  return list
 }
 
 /* ****************************************
@@ -85,4 +106,9 @@ Util.buildVehicleDetail = function(vehicle) {
 Util.handleErrors = fn => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next)
 
-module.exports = Util
+Util.classificationRules = classificationValidation.classificationRules
+Util.checkClassificationData = classificationValidation.checkClassificationData
+
+module.exports = {
+  ...Util
+}

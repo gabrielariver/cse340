@@ -3,12 +3,8 @@
     <h1>
         <%= title %>
     </h1>
-<% } else { 
-    res.redirect('/')
-    } %>
+    <% } else { %>
+        <p>Classification not found.</p>
+        <% } %>
 
-<!-- Message Block (comentado por ahora) -->
-<%# messages() %>
-
- <!-- Inventory Items Display -->
-<%- grid %>
+            <%- grid %>
