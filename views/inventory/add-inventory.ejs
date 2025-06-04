@@ -18,9 +18,9 @@
       </div>
       <% } %>
 
-        <form action="/inv/add-inventory" method="post" novalidate>
+        <form action="/inv/add-inventory" method="post">
           <label for="classification_id">Classification</label>
-          <%- classificationList %>
+          <%- classificationSelect %>
 
             <label for="inv_make">Make (min 3 chars)</label>
             <input type="text" id="inv_make" name="inv_make" required minlength="3"

@@ -11,14 +11,15 @@ const baseController = require("./controllers/baseController")
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
-const app = express()
 const static = require("./routes/static")
 const session = require("express-session")
 const pgSession = require("connect-pg-simple")(session)
 const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser");
 
+const app = express()
 
 /* ***********************
  * Middleware
@@ -42,6 +43,11 @@ app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+//w05 login learning activity
+app.use(cookieParser());
+app.use(utilities.checkJWTToken);
+
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine and Templates

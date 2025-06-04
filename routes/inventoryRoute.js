@@ -48,4 +48,28 @@ router.post(
   utilities.handleErrors(invController.addInventory)
 )
 
+router.get("/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
+// build the edit inventory view
+router.get("/edit/:inv_id",
+  utilities.handleErrors(invController.editInventoryView)
+)
+
+router.post(
+  "/update/",
+  inventoryValidation.inventoryRules(),
+  inventoryValidation.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+)
+//team activity w05 delete 
+router.get(
+  "/delete/:inv_id",
+  utilities.handleErrors(invController.buildDeleteView)
+)
+router.post(
+  "/delete",
+  utilities.handleErrors(invController.deleteInventory)
+)
 module.exports = router;

@@ -1,6 +1,7 @@
 const accountModel = require("../models/account-model")
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
+
 const validate = {}
 
 /*  **********************************
@@ -70,7 +71,42 @@ validate.checkRegData = async (req, res, next) => {
     }
   
     next()
+}
+
+validate.checkLoginData = async (req, res, next) => {
+  const { account_email } = req.body;
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("account/login", {
+      errors,
+      title: "Login",
+      nav,
+      account_email,
+    });
+    return;
   }
-  
-module.exports = validate
-  
+
+  next();
+};
+
+  /* ****************************************
+ *  Validation rules for login
+ * ************************************* */
+const loginRules = () => {
+  return [
+    body("account_email")
+      .trim()
+      .isEmail()
+      .withMessage("A valid email is required."),
+    body("account_password")
+      .trim()
+      .isLength({ min: 12 })
+      .withMessage("Password must be at least 12 characters long.")
+  ];
+};
+
+validate.loginRules = loginRules;
+
+module.exports = validate;

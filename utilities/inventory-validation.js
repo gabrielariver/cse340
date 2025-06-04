@@ -50,20 +50,47 @@ validate.inventoryRules = () => {
 validate.checkInventoryData = async (req, res, next) => {
   const errors = validationResult(req)
   const nav = await utilities.getNav()
-  const classificationList = await utilities.buildClassificationList(req.body.classification_id)
+  const classificationSelect = await utilities.buildClassificationList(req.body.classification_id)
 
   if (!errors.isEmpty()) {
-    return res.render("inventory/add-inventory", {
-      title: "Add Inventory",
-      nav,
-      classificationList,
-      errors: errors.array(),
-      message: null,
-      ...req.body
-    })
+    const isEdit = Boolean(req.body.inv_id)
+
+    return res.render(
+      isEdit ? "inventory/edit-inventory" : "inventory/add-inventory",
+      {
+        title: isEdit
+          ? "Edit " + req.body.inv_make + " " + req.body.inv_model
+          : "Add Inventory",
+        nav,
+        classificationSelect,
+        errors: errors.array(),
+        message: null,
+        ...req.body,
+      }
+    )
   }
 
   next()
 }
+
+validate.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req);
+  const nav = await utilities.getNav();
+  const classificationSelect = await utilities.buildClassificationList(req.body.classification_id);
+
+  if (!errors.isEmpty()) {
+    const itemName = `${req.body.inv_make} ${req.body.inv_model}`;
+    return res.status(400).render("inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav,
+      classificationSelect,
+      errors: errors.array(),
+      message: null,
+      ...req.body,
+    });
+  }
+
+  next();
+};
 
 module.exports = validate

@@ -1,0 +1,62 @@
+<main>
+    <h1>Update <%= inv_make %>
+            <%= inv_model %>
+    </h1>
+
+    <% if (errors && errors.length> 0) { %>
+        <div class="errors">
+            <ul>
+                <% errors.forEach(function(error) { %>
+                    <li>
+                        <%= error.msg %>
+                    </li>
+                    <% }) %>
+            </ul>
+        </div>
+        <% } %>
+
+            <form id="updateForm" action="/inv/update/" method="post">
+                <label for="inv_make">Make (min 3 chars)</label>
+                <input type="text" id="inv_make" name="inv_make" required minlength="3" value="<%= inv_make %>"
+                    title="Minimum 3 characters. Letters and numbers only.">
+
+                <label for="inv_model">Model (min 3 chars)</label>
+                <input type="text" id="inv_model" name="inv_model" required minlength="3" value="<%= inv_model %>"
+                    title="Minimum 3 characters. Letters and numbers only.">
+
+                <label for="inv_year">Year (1900–2099)</label>
+                <input type="number" id="inv_year" name="inv_year" required min="1900" max="2099"
+                    value="<%= inv_year %>" title="Must be a valid 4-digit year.">
+
+                <label for="inv_description">Description</label>
+                <textarea id="inv_description" name="inv_description" required
+                    title="Please enter a description."><%= inv_description %></textarea>
+
+                <label for="inv_image">Image Path</label>
+                <input type="text" id="inv_image" name="inv_image" required value="<%= inv_image %>"
+                    title="Enter the full image path.">
+
+                <label for="inv_thumbnail">Thumbnail Path</label>
+                <input type="text" id="inv_thumbnail" name="inv_thumbnail" required value="<%= inv_thumbnail %>"
+                    title="Enter the full thumbnail path.">
+
+                <label for="inv_price">Price</label>
+                <input type="number" step="0.01" id="inv_price" name="inv_price" required min="0"
+                    value="<%= inv_price %>" title="Enter a valid price.">
+
+                <label for="inv_miles">Miles</label>
+                <input type="number" id="inv_miles" name="inv_miles" required min="0" value="<%= inv_miles %>"
+                    title="Enter a positive number.">
+
+                <label for="inv_color">Color</label>
+                <input type="text" id="inv_color" name="inv_color" required value="<%= inv_color %>"
+                    title="Enter a valid color.">
+
+                <label for="classification_id">Classification</label>
+                <%- classificationSelect %>
+
+                    <input type="hidden" name="inv_id" value="<%= inv_id %>">
+                    <button type="submit" id="updateBtn">Update Inventory</button>
+            </form>
+            <script src="/js/inv-update.js"></script>
+</main>

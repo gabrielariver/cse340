@@ -1,15 +1,24 @@
 <main>
-    <h1>Inventory Management</h1>
-  
-    <% if (message && message.length > 0) { %>
-      <div class="message">
-        <%= message %>
-      </div>
+  <h1>Inventory Management</h1>
+
+  <% if (message && message.length> 0) { %>
+    <div class="message">
+      <%= message %>
+    </div>
     <% } %>
-  
-    <ul>
-      <li><a href="/inv/add-classification">Add New Classification</a></li>
-      <li><a href="/inv/add-inventory">Add New Inventory</a></li>
-    </ul>
-  </main>
-  
+
+      <ul>
+        <li><a href="/inv/add-classification">Add New Classification</a></li>
+        <li><a href="/inv/add-inventory">Add New Inventory</a></li>
+      </ul>
+
+      <form id="classification-form">
+        <label for="classification_id">Choose a Classification:</label>
+        <%- classificationSelect %>
+      </form>
+
+      <div id="inventoryDisplay">
+        <!-- AJAX table will appear here -->
+      </div>
+      <script src="/js/inventory.js"></script>
+</main>
