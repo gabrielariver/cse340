@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const invController = require("../controllers/invController");
 const utilities = require("../utilities/");
-const inventoryValidation = require("../utilities/inventory-validation")
-
+const inventoryValidation = require("../utilities/inventory-validation");
+const { checkEmployeeOrAdmin } = require("../utilities/account-check");
 
 router.get(
   "/classification/:classificationId",
@@ -26,50 +26,60 @@ router.get(
 
 router.get(
   "/add-classification",
+  checkEmployeeOrAdmin,
   utilities.handleErrors(invController.buildAddClassification)
-)
+);
 
 router.post(
   "/add-classification",
+  checkEmployeeOrAdmin,
   utilities.classificationRules(),  
   utilities.checkClassificationData, 
   utilities.handleErrors(invController.addClassification)
-)
+);
 
 router.get(
   "/add-inventory",
+  checkEmployeeOrAdmin,
   utilities.handleErrors(invController.buildAddInventory)
-)
+);
 
 router.post(
   "/add-inventory",
+  checkEmployeeOrAdmin,
   inventoryValidation.inventoryRules(),
   inventoryValidation.checkInventoryData,
   utilities.handleErrors(invController.addInventory)
-)
+);
 
 router.get("/getInventory/:classification_id",
   utilities.handleErrors(invController.getInventoryJSON)
 );
 
-// build the edit inventory view
+
 router.get("/edit/:inv_id",
+  checkEmployeeOrAdmin,
   utilities.handleErrors(invController.editInventoryView)
-)
+);
 
 router.post(
   "/update/",
+  checkEmployeeOrAdmin,
   inventoryValidation.inventoryRules(),
   inventoryValidation.checkUpdateData,
   utilities.handleErrors(invController.updateInventory)
-)
-//team activity w05 delete 
+);
+
 router.get(
   "/delete/:inv_id",
+  checkEmployeeOrAdmin,
   utilities.handleErrors(invController.buildDeleteView)
-)
+);
+
 router.post(
   "/delete",
+  checkEmployeeOrAdmin,
   utilities.handleErrors(invController.deleteInventory)
-)
+);
+
 module.exports = router;
