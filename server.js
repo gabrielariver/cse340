@@ -16,9 +16,10 @@ const session = require("express-session")
 const pgSession = require("connect-pg-simple")(session)
 const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute")
+//Week 06 - Final Project Enhancement
+const reviewRoute = require("./routes/reviewRoute");
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser");
-
 const app = express()
 
 /* ***********************
@@ -62,10 +63,13 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", inventoryRoute)
+//Final Project Enhancement
+app.use("/reviews", reviewRoute); 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({ status: 404, message: 'Sorry, we appear to have lost that page.' })
 })
+
 
 /* ***********************
  * Express Error Handler

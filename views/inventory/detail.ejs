@@ -1,4 +1,33 @@
-<h1>
-    <%= title %>
-</h1>
+<h1><%= title %></h1>
 <%- vehicleDetail %>
+
+<h2>Reviews</h2>
+
+<% if (reviews && reviews.length > 0) { %>
+  <ul>
+    <% reviews.forEach(function(review) { %>
+      <li><strong><%= review.account_firstname %>:</strong> <%= review.review_text %> <em>(<%= review.review_date.toLocaleDateString() %>)</em></li>
+    <% }); %>
+  </ul>
+<% } else { %>
+  <p>No reviews yet for this vehicle.</p>
+<% } %>
+
+<% if (accountData) { %>
+  <h3>Leave a Review</h3>
+  <form action="/reviews/add" method="post" class="review-form">
+    <div class="form-group">
+      <label for="review_text">Your Review:</label><br>
+      <textarea id="review_text" name="review_text" rows="5" minlength="10" required></textarea>
+      <small>Minimum 10 characters.</small>
+    </div>
+
+    <input type="hidden" name="inv_id" value="<%= inv_id %>">
+
+    <div class="form-submit">
+      <button type="submit">Submit Review</button>
+    </div>
+  </form>
+<% } else { %>
+  <p><a href="/account/login">Login to add a review</a></p>
+<% } %>
